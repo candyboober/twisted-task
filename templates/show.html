@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <table>
+        <thead>Table</thead>
+        <tbody>
+            {% for item in data %}
+                <tr>
+                    <td>{{item.ip}}</td>
+                    <td>{{item.ptr}}</td>
+                    <td>{{item.whois}}</td>
+                    <td>{{item.datetime}}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <button onclick="deleteData()">Remove data</button>
+
+    <script type="text/javascript">
+
+// I think that you won't use IE
+var deleteData = function(){
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() { // (3)
+        if (xhr.readyState != 4) return;
+        if (xhr.status != 200) {
+            alert(xhr.status + ': ' + xhr.statusText);
+        } else {
+            document.body.innerHTML = xhr.responseText;
+        }
+    }
+    xhr.open('DELETE', '/show/');
+    xhr.send();
+}
+
+    </script>
+</body>
+</html>
